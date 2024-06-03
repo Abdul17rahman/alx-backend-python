@@ -11,13 +11,14 @@ from unittest.mock import Mock, patch
 
 
 class TestAccessNestedMap(unittest.TestCase):
-
+    """Class for testing the access nested method"""
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
     def test_access_nested_map(self, nested_map, path, expected):
+        """ Function testing access method"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
@@ -25,19 +26,21 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"))
     ])
     def test_access_nested_map_exception(self, nested_map, path):
+        """ Function testing exception"""
         with self.assertRaises(KeyError) as cm:
             access_nested_map(nested_map, path)
         self.assertEqual(str(cm.exception), f"'{path[-1]}'")
 
 
 class TestGetJson(unittest.TestCase):
-
+    """ Test http call for json data"""
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
     @patch('utils.requests.get')
     def test_get_json(self, url, expected, mock_get):
+        """ Test mocking http request"""
         mock_res = Mock()
         mock_res.json.return_value = expected
 
@@ -49,9 +52,11 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
-
+    """ Test memoisation function"""
     def test_memoize(self):
+        """ Mocking object"""
         class TestClass:
+            """ Testing Memo class"""
             def a_method(self):
                 return 42
 
