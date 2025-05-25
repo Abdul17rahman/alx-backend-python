@@ -32,10 +32,10 @@ def connect_to_prodev():
 def create_table(connection):
     cursor = connection.cursor()
 
-    cursor.execute(""" CREATE TABLE IF NOT EXISTS user_data(user_id CHAR(36), Primary Key,
+    cursor.execute(""" CREATE TABLE IF NOT EXISTS user_data(user_id CHAR(36) Primary Key,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255), NOT NULL,
-    age DECIMAL, NOT NULL)
+    email VARCHAR(255) NOT NULL,
+    age DECIMAL NOT NULL)
     """)
 
 
@@ -48,7 +48,7 @@ def insert_data(connection, data):
         next(reader)
 
         for row in reader:
-            user_id = uuid.uuid4()
+            user_id = str(uuid.uuid4())
             name, email, age = row
 
             cursor.execute("""
