@@ -3,10 +3,12 @@
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch, MagicMock
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
+
+    """ Testing access_nested_map() function for correct results."""
 
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -29,6 +31,8 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
 
+    """ Testing get_json() function by mocking the results."""
+
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
@@ -44,6 +48,30 @@ class TestGetJson(unittest.TestCase):
         self.assertEqual(res, payload)
 
         mock_obj.assert_called_once_with(test_url)
+
+
+class TestMemoize(unittest.TestCase):
+    """ Testing Memoization functionality by mocking the results."""
+
+    def test_memoize(self):
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, "a_method", return_value=42) as mock_method:
+            instance = TestClass()
+
+            res1 = instance.a_property
+            res2 = instance.a_property
+
+            self.assertEqual(res1, 42)
+            self.assertEqual(res2, 42)
+
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
