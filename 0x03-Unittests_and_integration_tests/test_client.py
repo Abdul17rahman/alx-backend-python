@@ -6,7 +6,6 @@ Client Testing Module
 """
 
 import unittest
-import requests
 from parameterized import parameterized, parameterized_class
 from unittest.mock import patch, PropertyMock, MagicMock
 from client import GithubOrgClient
