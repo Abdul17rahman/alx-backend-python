@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+"""
+Testing module for the utils module
+"""
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch, MagicMock
@@ -7,7 +10,6 @@ from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
-
     """ Testing access_nested_map() function for correct results."""
 
     @parameterized.expand([
@@ -16,6 +18,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
     def test_access_nested_map(self, nested_map, path, expected):
+        """ Testing the access_nested method"""
         result = access_nested_map(nested_map, path)
 
         self.assertEqual(result, expected)
@@ -25,12 +28,12 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"))
     ])
     def test_access_nested_map_exception(self, nested_map, path):
+        """ Testing exception from the access_nested_method"""
         with self.assertRaises(KeyError):
             access_nested_map(nested_map, path)
 
 
 class TestGetJson(unittest.TestCase):
-
     """ Testing get_json() function by mocking the results."""
 
     @parameterized.expand([
@@ -39,6 +42,7 @@ class TestGetJson(unittest.TestCase):
     ])
     @patch('utils.requests.get')
     def test_get_json(self, test_url, payload, mock_obj):
+        """ Testing the get_json method"""
         mock_response = MagicMock()
         mock_response.json.return_value = payload
         mock_obj.return_value = mock_response
