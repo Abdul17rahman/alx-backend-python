@@ -57,3 +57,10 @@ class GithubOrgClient:
         except KeyError:
             return False
         return has_license
+
+
+# inst = GithubOrgClient("google")
+inst2 = GithubOrgClient("abc")
+
+# print(inst.org)
+print(inst2.org)
