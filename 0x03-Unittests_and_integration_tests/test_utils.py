@@ -58,6 +58,7 @@ class TestMemoize(unittest.TestCase):
     """ Testing Memoization functionality by mocking the results."""
 
     def test_memoize(self):
+        """ Test Momoize function"""
         class TestClass:
             """ Testing class for memoization."""
 
