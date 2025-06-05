@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, permissions
 from .models import Conversation, Message
 from .serializers import MessageSerializer, ConversationSerializer
 
@@ -10,6 +10,8 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['message_body', 'sent_at']
 
+    permission_class = [permissions.IsAuthenticated]
+
 
 class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
@@ -17,3 +19,5 @@ class ConversationViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['created_at']
     search_fields = ['participants_first_email']
+
+    permission_class = [permissions.IsAuthenticated]
