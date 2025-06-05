@@ -5,8 +5,12 @@ from chats import views
 
 router = routers.DefaultRouter()
 
-router.register(r"messages", views.MessageViewSet)
-router.register(r"Conversations", views.ConversationViewSet)
+router.register(r"messages", views.MessageViewSet,
+                basename='conversation-messages')
+router.register(r"Conversations", views.ConversationViewSet,
+                basename='conversation')
 
 
-path("", include(router.urls)),
+urlpatterns = [
+    path("", include(router.urls)),
+]
