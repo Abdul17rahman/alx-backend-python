@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets, filters, status, permissions
+from rest_framework import viewsets, status, permissions
+from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from .models import Conversation, Message
 from .serializers import MessageSerializer, ConversationSerializer
 from .permissions import IsParticipantOfConversation
+from .pagination import StandardResultsSetPagination
+from .filters import MessageFilter
 
 
 class ConversationViewSet(viewsets.ModelViewSet):
@@ -19,10 +22,12 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['message_body', 'sent_at']
+    filter_backends = (filters.DjangoFilterBackend)
+    filterset_class = MessageFilter
 
     permission_classes = [permissions.IsAuthenticated]
+
+    pagination_class = [StandardResultsSetPagination]
 
     def get_queryset(self):
 
