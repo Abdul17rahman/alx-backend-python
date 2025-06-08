@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status, permissions
-from django_filters import rest_framework as filters
+from rest_framework import viewsets, status, filters, permissions
+from django_filters import rest_framework as c_filters
 from rest_framework.response import Response
 from .models import Conversation, Message
 from .serializers import MessageSerializer, ConversationSerializer
 from .permissions import IsParticipantOfConversation
-from .pagination import StandardResultsSetPagination
+from .pagination import PageNumberPagination
 from .filters import MessageFilter
 
 
@@ -22,12 +22,12 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
-    filter_backends = (filters.DjangoFilterBackend)
+    filter_backends = (c_filters.DjangoFilterBackend)
     filterset_class = MessageFilter
 
     permission_classes = [permissions.IsAuthenticated]
 
-    pagination_class = [StandardResultsSetPagination]
+    pagination_class = [PageNumberPagination]
 
     def get_queryset(self):
 

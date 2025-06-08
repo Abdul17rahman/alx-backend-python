@@ -6,4 +6,4 @@ class MessageFilter(filters.FilterSet):
 
     class Meta:
         model = Message
-        fields = ["users", "sent_at"]
+        fields = ["sender", "sent_at"]
