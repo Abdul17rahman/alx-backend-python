@@ -11,7 +11,8 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['message_body', 'sent_at']
 
-    permission_class = [permissions.IsAuthenticated]
+    permission_class = [permissions.IsAuthenticated,
+                        IsParticipantOfConversation]
 
 
 class ConversationViewSet(viewsets.ModelViewSet):
