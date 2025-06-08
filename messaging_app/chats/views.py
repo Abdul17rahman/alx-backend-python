@@ -5,16 +5,6 @@ from .serializers import MessageSerializer, ConversationSerializer
 from .permissions import IsParticipantOfConversation
 
 
-class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all().order_by('sent_at')
-    serializer_class = MessageSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['message_body', 'sent_at']
-
-    permission_class = [permissions.IsAuthenticated,
-                        IsParticipantOfConversation]
-
-
 class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
@@ -22,5 +12,13 @@ class ConversationViewSet(viewsets.ModelViewSet):
     ordering_fields = ['created_at']
     search_fields = ['participants_first_email']
 
-    permission_class = [permissions.IsAuthenticated,
-                        IsParticipantOfConversation]
+    permission_classes = [permissions.IsAuthenticated,
+                          IsParticipantOfConversation]
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    serializer_class = MessageSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['message_body', 'sent_at']
+
+    permission_classes = [permissions.IsAuthenticated]
