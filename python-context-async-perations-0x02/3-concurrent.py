@@ -26,7 +26,6 @@ async def async_fetch_older_users():
 
 
 async def fetch_concurrently():
-    # Run both queries concurrently
     await asyncio.gather(
         async_fetch_users(),
         async_fetch_older_users()
